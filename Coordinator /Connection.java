@@ -12,7 +12,7 @@ public class Connection extends Thread{
 		// TODO Auto-generated constructor stub
 		this.cPort=Port;
 		server = new ServerSocket(cPort);
-	}
+	} 
 	 @Override
 	 public void run() {
 		 try{

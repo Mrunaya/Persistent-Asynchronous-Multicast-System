@@ -27,7 +27,7 @@ public class Participant {
 		ObjectOutputStream outputStream = new  ObjectOutputStream(pSocket.getOutputStream());
 		ObjectInputStream inputStream = new ObjectInputStream(pSocket.getInputStream());
 		ThreadB threadB=null;
-
+ 
 		try  {
 			Scanner sc = new Scanner(System.in);
 			while(!userCmd.equalsIgnoreCase("quit")) {

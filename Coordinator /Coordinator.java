@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Coordinator {
-
+ 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader reader = new BufferedReader(new FileReader((String)args[0]));

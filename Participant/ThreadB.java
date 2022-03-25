@@ -1,6 +1,6 @@
 
 public class ThreadB extends Thread{
-
+ 
 	public ThreadB(int iD, String iPAddr, int pPort) {
 		// TODO Auto-generated constructor stub
 	}
