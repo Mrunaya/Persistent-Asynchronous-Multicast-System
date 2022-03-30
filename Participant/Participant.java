@@ -29,9 +29,11 @@ public class Participant {
 		ThreadB threadB=null;
  
 		try  {
-			Scanner sc = new Scanner(System.in);
+			
 			while(!userCmd.equalsIgnoreCase("quit")) {
 				//USER COMMANDS BEGIN FROM HERE----->
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Command : ");
 				userCmd = sc.nextLine();
 				String[] cmdVal = userCmd.split(" ", 2);
 
@@ -41,7 +43,7 @@ public class Participant {
 					int pPort=Integer.parseInt(cmdVal[1]);
 					 threadB= new ThreadB(ID,IPAddr,pPort);
 					threadB.start();
-					outputStream.writeObject("Register");
+					outputStream.writeObject(cmdVal[0]+" "+ID+" "+IPAddr+" "+pPort);
 					break;
 					
 				case "Deregister":
@@ -50,18 +52,18 @@ public class Participant {
 					break;
 					
 				case "Disconnect":
-					outputStream.writeObject("Disconnect");
+					outputStream.writeObject("Disconnect "+ID);
 					break;
 					
 				case "Reconnect":
 					 pPort=Integer.parseInt(cmdVal[1]);
 					 threadB= new ThreadB(ID,IPAddr,pPort);
 					threadB.start();
-					outputStream.writeObject("Reconnect");
+					outputStream.writeObject(cmdVal[0]+" "+ID+" "+IPAddr+" "+pPort);
 					break;
 					
 				case "Multicast":
-					outputStream.writeObject("Multicast "+cmdVal[1]);
+					outputStream.writeObject("Multicast "+cmdVal[1]+" "+logFile);
 					String acknow= (String)inputStream.readObject();
 					
 					break;
@@ -71,7 +73,7 @@ public class Participant {
 
 
 		}catch(Exception e) {
-
+e.printStackTrace();
 		}
 
 	}

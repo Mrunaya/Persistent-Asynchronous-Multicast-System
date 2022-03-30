@@ -3,14 +3,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Multicast extends Thread {
 	int mPort;
 	static Socket socket = null;
+	Map<Integer,  Map<String, Integer>> multicastGrp= new HashMap<Integer, Map<String, Integer>>();
 	private static ServerSocket server;
-	public Multicast(int Port) throws IOException {
+	public Multicast(int Port, Map<Integer, Map<String, Integer>> map) throws IOException {
 		// TODO Auto-generated constructor stub
 		this.mPort=Port;
+		this.multicastGrp=map;
 		server = new ServerSocket(mPort);
 	} 
 	 @Override

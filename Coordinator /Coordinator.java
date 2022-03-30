@@ -1,10 +1,8 @@
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Coordinator {
  
@@ -14,11 +12,12 @@ public class Coordinator {
 	    int mPort = Integer.parseInt(reader.readLine());
 		int tTime = Integer.parseInt(reader.readLine());
 		int cPort=6600;
+		Map<Integer, Map<String,Integer>> multicastGrp= new HashMap<Integer,Map<String,Integer>>();
 		System.out.println("Coordinator starting..");
-		Connection cThread = new Connection(cPort);
+		Connection cThread = new Connection(cPort,multicastGrp);
 		cThread.start();
 		
-		Multicast mThread = new Multicast(mPort);
+		Multicast mThread = new Multicast(mPort,multicastGrp);
 		mThread.start();
 	}
 
