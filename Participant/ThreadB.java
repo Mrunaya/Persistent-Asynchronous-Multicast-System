@@ -44,8 +44,8 @@ public class ThreadB extends Thread{
 				BufferedWriter bw = null;
 				FileWriter fw = null;
 		    	File file = new File(logFile);
-		    	System.out.println(file);
-		    	System.out.println(file.exists());
+		    	//System.out.println(file);
+		    	//System.out.println(file.exists());
 		        FileWriter fr = new FileWriter(file, true);
 		        BufferedWriter br = new BufferedWriter(fr);
 		        PrintWriter pr = new PrintWriter(br);

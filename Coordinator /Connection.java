@@ -73,8 +73,7 @@ public class Connection extends Thread{
 						 System.out.println("disconnectMulticastGrp grp after deregister "+disconnectMulticastGrp);
 						 break;
 					 case "Disconnect":
-						 System.out.println("In disconnect");
-						 ID= Integer.parseInt(userInput[1]);
+						ID= Integer.parseInt(userInput[1]);
 						 Map disconnectMap=multicastGrp.get(ID);
 						 disconnectMulticastGrp.put(ID,disconnectMap);
 						 multicastGrp.remove(ID);System.out.println("multicast grp after disconnect "+multicastGrp);
