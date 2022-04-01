@@ -36,15 +36,15 @@ public class Multicast extends Thread {
 
 				 String inputCmd = (String) inputStream.readObject();
 
-				 String[] userInput = inputCmd.split(" ", 2);
+				 //String[] userInput = inputCmd.split(" ", 2);
 
-				 if("quit".equalsIgnoreCase(userInput[0])){
+				 if("quit".equalsIgnoreCase(inputCmd)){
 					 outputStream.writeObject("quit");
 					 inputStream.close();
 					 outputStream.close();
 					 break;
 				 }
-				 String msg=userInput[0];// msg to be multicasted
+				 String msg=inputCmd;// msg to be multicasted
 				 outputStream.writeObject("message received!");
 				 System.out.println("multicastGrp "+multicastGrp);
 				 System.out.println("disconnectMulticastGrp "+disconnectMulticastGrp);
