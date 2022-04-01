@@ -50,15 +50,17 @@ public class Multicast extends Thread {
 				 System.out.println("disconnectMulticastGrp "+disconnectMulticastGrp);
 				 //Set<Integer> keys = multicastGrp.keySet();
 				 Integer[] Ids = multicastGrp.keySet().toArray(new Integer[multicastGrp.size()]);
-				
+				 System.out.println("Ids "+Ids);
 				 for(int i=0; i<Ids.length; i++) {
 					 Map innerMap=multicastGrp.get(Ids[i]);
 					 Set<String> ipAddress=innerMap.keySet();
 					 String[] ip = ipAddress.toArray(new String[ipAddress.size()]);
 					 int port= (int) innerMap.get(ip[0]);
+					 System.out.println("port "+port);
 					 Socket mSocket = new Socket(ip[0],port);
 					 ObjectOutputStream mOutputStream = new  ObjectOutputStream(mSocket.getOutputStream());
 					 mOutputStream.writeObject(msg);
+					 System.out.println(mOutputStream);
 
 				 }
 				/* Integer[] disconnectedIds = disconnectMulticastGrp.keySet().toArray(new Integer[disconnectMulticastGrp.size()]);
@@ -81,7 +83,7 @@ public class Multicast extends Thread {
 			 }
 
 		 }catch(Exception e) {
-			 e.printStackTrace();
+e.printStackTrace();
 		 }
 	 }
 

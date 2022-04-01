@@ -34,12 +34,15 @@ public class ThreadB extends Thread{
 			 while(true) {
 				 if(exit)
 					 break;
+				 
 				 socket = serverSocket.accept();
 				ObjectInputStream mInputStream = new  ObjectInputStream(socket.getInputStream());
 				String message=(String)mInputStream.readObject();
 				BufferedWriter bw = null;
 				FileWriter fw = null;
 		    	File file = new File(logFile);
+		    	System.out.println(file);
+		    	System.out.println(file.exists());
 		        FileWriter fr = new FileWriter(file, true);
 		        BufferedWriter br = new BufferedWriter(fr);
 		        PrintWriter pr = new PrintWriter(br);
