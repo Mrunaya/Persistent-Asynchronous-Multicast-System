@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,9 +47,9 @@ public class Participant {
 					inputStream= new ObjectInputStream(pSocket.getInputStream());
 					
 					int pPort=Integer.parseInt(cmdVal[1]);
-					 threadB= new ThreadB(ID,IPAddr,pPort,logFile);
+					threadB= new ThreadB(ID,IPAddr,pPort,logFile);
 					threadB.start();
-					outputStream.writeObject(cmdVal[0]+" "+ID+" "+IPAddr+" "+pPort);
+					outputStream.writeObject(cmdVal[0]+" "+ID+" "+Inet4Address.getLocalHost().getHostAddress()+" "+pPort);
 					 mPort=(int) inputStream.readObject();
 					break;
 					
@@ -82,7 +83,7 @@ public class Participant {
 					 pPort=Integer.parseInt(cmdVal[1]);
 					 threadB= new ThreadB(ID,IPAddr,pPort,logFile);
 					threadB.start();
-					outputStream.writeObject(cmdVal[0]+" "+ID+" "+IPAddr+" "+pPort);
+					outputStream.writeObject(cmdVal[0]+" "+ID+" "+Inet4Address.getLocalHost().getHostAddress()+" "+pPort);
 					break;
 					
 				case "Multicast":

@@ -18,16 +18,19 @@ public class ThreadB extends Thread{
 	int port;
 	String logFile;
 	boolean exit;
+	
 	public ThreadB(int ID, String iPAddr, int pPort, String File) throws UnknownHostException, IOException {
 		// TODO Auto-generated constructor stub
-		this.Id=ID;
-		this.ip=iPAddr;
-		this.port=pPort;
-		this.logFile=File;
-		serverSocket=new ServerSocket(port);
+		this.Id = ID;
+		this.ip = iPAddr;
+		this.port = pPort;
+		this.logFile = File;
+		serverSocket = new ServerSocket(port);
 		 
 		
-	}	 @Override
+	}
+	
+	@Override
 	 public void run() {
 		 try{
 			 
@@ -35,7 +38,7 @@ public class ThreadB extends Thread{
 				 if(exit)
 					 break;
 				 
-				 socket = serverSocket.accept();
+				socket = serverSocket.accept();
 				ObjectInputStream mInputStream = new  ObjectInputStream(socket.getInputStream());
 				String message=(String)mInputStream.readObject();
 				BufferedWriter bw = null;
@@ -53,7 +56,7 @@ public class ThreadB extends Thread{
 			 }
 
 		 }catch(Exception e) {
-
+			 
 		 }
 	 }
 	
