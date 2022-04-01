@@ -25,7 +25,7 @@ public class ThreadB extends Thread{
 		this.port=pPort;
 		this.logFile=File;
 		serverSocket=new ServerSocket(port);
-		
+		 
 		
 	}	 @Override
 	 public void run() {
