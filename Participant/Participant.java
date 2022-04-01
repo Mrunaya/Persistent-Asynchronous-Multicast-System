@@ -8,11 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Participant {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
+		
 		BufferedReader reader = new BufferedReader(new FileReader((String)args[0]));
 		int ID = Integer.parseInt(reader.readLine());
 		String logFile = reader.readLine();
@@ -20,13 +22,12 @@ public class Participant {
 		String IPAddr=ipPort[0];
 		int cPort=Integer.parseInt(ipPort[1]);
 		System.out.println("Participnat starting..");
-		System.out.println("cPort "+cPort);
-		Socket pSocket = new Socket(IPAddr,cPort);
-		System.out.println("Participnat connected to coordinator..");
 		String userCmd = "";
-		ObjectOutputStream outputStream = new  ObjectOutputStream(pSocket.getOutputStream());
-		ObjectInputStream inputStream = new ObjectInputStream(pSocket.getInputStream());
+		Socket pSocket = null;
+		ObjectOutputStream outputStream = null;
+		ObjectInputStream inputStream = null;
 		ThreadB threadB=null;
+		int mPort = 0;
  
 		try  {
 			
@@ -34,37 +35,64 @@ public class Participant {
 				//USER COMMANDS BEGIN FROM HERE----->
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Command : ");
-				userCmd = sc.nextLine();
+				userCmd = sc.nextLine();	
 				String[] cmdVal = userCmd.split(" ", 2);
 
 
 				switch (cmdVal[0]) {
 				case "Register":
+					pSocket= new Socket(IPAddr,cPort);
+					outputStream= new  ObjectOutputStream(pSocket.getOutputStream());
+					inputStream= new ObjectInputStream(pSocket.getInputStream());
+					
 					int pPort=Integer.parseInt(cmdVal[1]);
-					 threadB= new ThreadB(ID,IPAddr,pPort);
+					 threadB= new ThreadB(ID,IPAddr,pPort,logFile);
 					threadB.start();
 					outputStream.writeObject(cmdVal[0]+" "+ID+" "+IPAddr+" "+pPort);
+					 mPort=(int) inputStream.readObject();
 					break;
 					
 				case "Deregister":
-					outputStream.writeObject("Deregister");
-					//threadB.close();
+					pSocket= new Socket(IPAddr,cPort);
+					outputStream= new  ObjectOutputStream(pSocket.getOutputStream());
+					
+					inputStream= new ObjectInputStream(pSocket.getInputStream());
+					
+					outputStream.writeObject(cmdVal[0]+" "+ID);
+					threadB.close();
+					pSocket.close();
+					outputStream.close();
+					inputStream.close();
 					break;
 					
 				case "Disconnect":
+					pSocket= new Socket(IPAddr,cPort);
+					outputStream= new  ObjectOutputStream(pSocket.getOutputStream());
+					inputStream= new ObjectInputStream(pSocket.getInputStream());
+					
 					outputStream.writeObject("Disconnect "+ID);
+					threadB.close();
 					break;
 					
 				case "Reconnect":
+					pSocket= new Socket(IPAddr,cPort);
+					outputStream= new  ObjectOutputStream(pSocket.getOutputStream());
+					inputStream= new ObjectInputStream(pSocket.getInputStream());
+					
 					 pPort=Integer.parseInt(cmdVal[1]);
-					 threadB= new ThreadB(ID,IPAddr,pPort);
+					 threadB= new ThreadB(ID,IPAddr,pPort,logFile);
 					threadB.start();
 					outputStream.writeObject(cmdVal[0]+" "+ID+" "+IPAddr+" "+pPort);
 					break;
 					
 				case "Multicast":
-					outputStream.writeObject("Multicast "+cmdVal[1]+" "+logFile);
-					String acknow= (String)inputStream.readObject();
+					
+					Socket mSocket = new Socket(IPAddr,mPort);
+					ObjectOutputStream mOutputStream = new  ObjectOutputStream(mSocket.getOutputStream());
+					ObjectInputStream mInputStream = new ObjectInputStream(mSocket.getInputStream());
+					
+					mOutputStream.writeObject(cmdVal[1]);
+					String acknow= (String)mInputStream.readObject();
 					
 					break;
 					
@@ -73,7 +101,7 @@ public class Participant {
 
 
 		}catch(Exception e) {
-e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}
